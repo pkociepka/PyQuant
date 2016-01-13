@@ -30,3 +30,9 @@ def indices(order):
     n = len(order)
     states = [format(x, '0%sb' % n) for x in range(2**n)]
     return [int(x, base=2) for x in sorted(states, key=lambda x: shuffle(x, order))]
+
+def swap(order, a, b):
+    tmp = order[a]
+    order[a] = order[b]
+    order[b] = tmp
+    return order
