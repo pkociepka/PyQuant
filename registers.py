@@ -25,10 +25,10 @@ class Register():
         return self
 
     def apply_to_qubit(self, gate, qubit_number=0):
-        gates = [gates.I for x in range(qubit_number)]
-        gates.append(gate)
-        gates.extend([gates.I for x in range(self.size - qubit_number - 1)])
-        return self.apply(gates)
+        gates_list = [gates.I for x in range(qubit_number)]
+        gates_list.append(gate)
+        gates_list.extend([gates.I for x in range(self.size - qubit_number - 1)])
+        return self.apply(gates_list)
 
     def apply_cirquit(self, cirquit):
         if not self.size == cirquit.size:
