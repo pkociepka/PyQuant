@@ -1,16 +1,5 @@
-from numpy import dot, kron, exp, pi
-
-def __kron(matrices):
-    res = matrices[0]
-    for m in matrices[1:]:
-        res = kron(res, m)
-    return res
-
-def __dot(matrices):
-    res = matrices[0]
-    for m in matrices[1:]:
-        res = dot(res, m)
-    return res
+from numpy import exp, pi, sqrt
+from q_math import *
 
 I = [[1, 0],
      [0, 1]]
@@ -26,8 +15,13 @@ Y = [[0, -1j],
 Z = [[1, 0],
      [0, -1]]
 
-H = [[0, 1],
-     [1, 0]]
+H = dot([1/sqrt(2), [[1, 1],
+                     [1, -1]]])
 
 R = lambda phi: [[1, 0],
                  [0, exp(1j*pi/phi)]]
+
+print(R(1))
+print(R(2))
+print(R(3))
+print(R(4))
