@@ -7,6 +7,13 @@ class Cirquit():
         self.steps.append(gates)
         return self
 
+    def add_cirquit(self, cirquit):
+        if not cirquit.size == self.size:
+                raise ValueError("Unproper cirquit size")
+        for step in cirquit.steps:
+            self.add_step(step)
+        return self
+
     def print(self):
         print("Size: %s" % self.size)
         print("Steps: %s" % self.steps)
