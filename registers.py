@@ -37,6 +37,12 @@ class Register():
             self.apply(step)
         return self
 
+    def shuffle(self, order):
+        if not len(order) == self.size:
+            raise ValueError("Unproper order for Register.shuffle(): expected %s, got %s" % (self.size, len(order)))
+        self.apply([gates.Permutation(order)])
+        return self
+
     def measure(self):
         probabilities = [x**2 for x in self.values]
         for i in range(1, 2**self.size):

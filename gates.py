@@ -48,3 +48,11 @@ sqrtSwap = [[1, 0,          0,          0],
             [0, 0,          0,          1]]
 
 Fredkin = controlled(Swap, size=2)
+
+def Permutation(order):
+    ind = indices(order)
+    n = len(order)
+    P = [[0 for x in range(2**n)] for x in range(2**n)]
+    for i in range(2**n):
+        P[i][ind[i]] = 1
+    return P
