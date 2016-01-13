@@ -1,7 +1,9 @@
 import random
 
 from q_math import *
+from cirquits import *
 import gates
+
 
 class Register():
     def __init__(self, size):
@@ -19,11 +21,7 @@ class Register():
         return self
 
     def apply(self, gates):
-        print("?")
-        print(kron(gates))
         self.values = dot([self.values, kron(gates)])
-        print("!")
-        print(self.values)
         return self
 
     def apply_to_qubit(self, gate, qubit_number=0):
@@ -31,6 +29,13 @@ class Register():
         gates.append(gate)
         gates.extend([gates.I for x in range(self.size - qubit_number - 1)])
         return self.apply(gates)
+
+    def apply_cirquit(self, cirquit):
+        if not self.size == cirquit.size:
+            raise ValueError("Unproper cirquit size")
+        for step in cirquit.steps:
+            self.apply(step)
+        return self
 
     def measure(self):
         probabilities = [x**2 for x in self.values]
@@ -42,4 +47,9 @@ class Register():
             i -= 1
         self.values = [0 for x in range(2**self.size)]
         self.values[i] = 1
+        return self
+
+    def print(self):
+        print("Size: %s" % self.size)
+        print("Values: %s" % self.values)
         return self
