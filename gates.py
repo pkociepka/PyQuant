@@ -36,3 +36,15 @@ Not = X
 CNot = controlled(X)
 CCNot = controlled(CNot, size=2)
 Toffoli = CCNot
+
+Swap = [[1, 0, 0, 0],
+        [0, 0, 1, 0],
+        [0, 1, 0, 0],
+        [0, 0, 0, 1]]
+
+sqrtSwap = [[1, 0,          0,          0],
+            [0, 0.5*(1+1j), 0.5*(1-1j), 0],
+            [0, 0.5*(1-1j), 0.5*(1+1j), 0],
+            [0, 0,          0,          1]]
+
+Fredkin = controlled(Swap, size=2)
