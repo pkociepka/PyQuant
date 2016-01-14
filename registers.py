@@ -56,6 +56,11 @@ class Register():
         return self
 
     def print(self):
-        print("Size: %s" % self.size)
-        print("Values: %s" % self.values)
+        print("\nProbabilities of states, %s-qubit register:" % self.size)
+        for i in range(2**self.size):
+            if abs(self.values[i]) > 10e-5:
+                state = format(i, '0%sb' % self.size)
+                prob = abs(self.values[i]) ** 2
+                print("|%s> : %s" % (state, prob))
+        print()
         return self
