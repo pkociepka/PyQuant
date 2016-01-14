@@ -44,7 +44,7 @@ class Register():
         return self
 
     def measure(self):
-        probabilities = [x**2 for x in self.values]
+        probabilities = [abs(x)**2 for x in self.values]
         for i in range(1, 2**self.size):
             probabilities[i] += probabilities[i-1]
         p = random.random()
