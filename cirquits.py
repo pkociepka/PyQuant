@@ -2,9 +2,9 @@ from q_math import *
 import gates
 
 class Cirquit():
-    def __init__(self, size):
+    def __init__(self, size, steps=[]):
         self.size = size
-        self.steps = []
+        self.steps = steps
 
     def add_step(self, gates):
         self.steps.append(gates)
@@ -45,6 +45,9 @@ class Cirquit():
         for step in cirquit.steps:
             self.add_step(step)
         return self
+
+    def reversed(self):
+        return Cirquit(size=self.size, steps=list(reversed(self.steps)))
 
     def print(self):
         print("Size: %s" % self.size)
