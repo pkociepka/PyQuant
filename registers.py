@@ -55,6 +55,16 @@ class Register():
         self.values[i] = 1
         return self
 
+    def add_qubits(self, n, location="bottom"):
+        self.size += n
+        extension = [0 for z in range(2**n)]
+        extension[0] = 1
+        if location == "top":
+            self.values = kron([extension, self.values])
+        elif location == "bottom":
+            self.values = kron([self.values, extension])
+        return self
+
     def print(self):
         print("\nProbabilities of states, %s-qubit register:" % self.size)
         for i in range(2**self.size):
