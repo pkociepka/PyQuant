@@ -23,3 +23,14 @@ Sum = Cirquit(3).add_controlled_gate(gates.Not, 2, 1)\
 Carry = Cirquit(4).add_double_controlled_gate(gates.Not, 3, [1, 2])\
                   .add_controlled_gate(gates.Not, 2, 1)\
                   .add_double_controlled_gate(gates.Not, 3, [0, 2])
+
+# 1-qubit full adder
+# order of qubits in input register:
+#   | 0, a, b, 0 >
+# order of qubits in output register:
+#   | lower_carry, a, a+b+lower_carry, upper_carry >
+# Please, ensure you won't input |1> value
+#   for upper_carry qubit
+Adder = Cirquit(4).add_cirquit(Carry)\
+                  .add_controlled_gate(gates.Not, 2, 1)\
+                  .add_cirquit(copy(Sum).extend(1, location="bottom"))
