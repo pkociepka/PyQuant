@@ -4,7 +4,6 @@ from q_math import *
 from cirquits import *
 import gates
 
-
 class Register():
     def __init__(self, size):
         self.size = size
@@ -18,6 +17,11 @@ class Register():
         if not len(values) == 2**self.size:
             raise ValueError("Wrong quantum register size")
         self.values = values[:]
+        return self
+
+    def fix_state(self, state):
+        self.values = [0 for i in range(2**self.size)]
+        self.values[state] = 1
         return self
 
     def apply(self, gates):
