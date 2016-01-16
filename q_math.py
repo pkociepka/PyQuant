@@ -1,6 +1,13 @@
 import math
 from numpy import dot as npdot, kron as npkron, array as array
 
+# matrices used by controlled gates
+Up_l = [[1,0],
+        [0,0]]
+
+Lo_r = [[0,0],
+        [0,1]]
+
 def kron(matrices):
     res = matrices[0]
     for m in matrices[1:]:

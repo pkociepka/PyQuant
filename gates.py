@@ -22,15 +22,18 @@ R = lambda phi: [[1, 0],
                  [0, exp(1j*pi/phi)]]
 
 def controlled(gate, size=1, c_bit="up"):
-    Up_l = [[1,0],
-            [0,0]]
-    Lo_r = [[0,0],
-            [0,1]]
-
     if c_bit == "up":
         return add(kron([Up_l, Id(size)]), kron([Lo_r, gate]))
     elif c_bit == "down":
         return add(kron([Id(size), Up_l]), kron([gate, Lo_r]))
+
+def double_controlled(gate, size=1, c_bit="up"):
+    if c_bit == "up":
+        return add(kron([Up_l, Id(size+1)]),
+                   kron([Lo_r, controlled(gate, size, c_bit)]))
+    elif c_bit == "down":
+        return add(kron([Id(size+1), Up_l]),
+                   kron([controlled(gate, size, c_bit), Lo_r]))
 
 Not = X
 CNot = controlled(X)
