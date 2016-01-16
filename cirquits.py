@@ -81,13 +81,15 @@ class Cirquit():
         return Cirquit(size=self.size, steps=list(reversed(self.steps)))
 
     def extend(self, n, location="bottom"):
-        self.size += n
-        if location == "bottom":
-            for s in self.steps:
-                s.append(gates.Id(n))
-        elif location == "top":
-            for s in self.steps:
-                s.insert(0, gates.Id(n))
+        # passing 0 cause some problems with matrices
+        if n:
+            self.size += n
+            if location == "bottom":
+                for s in self.steps:
+                    s.append(gates.Id(n))
+            elif location == "top":
+                for s in self.steps:
+                    s.insert(0, gates.Id(n))
         return self
 
     def print(self):

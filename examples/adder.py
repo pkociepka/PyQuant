@@ -38,3 +38,14 @@ carry = lambda: deepcopy(Carry)
 Adder = Cirquit(4).add_cirquit(Carry)\
                   .add_controlled_gate(gates.Not, 2, 1)\
                   .add_cirquit(sum().extend(1, location="bottom"))
+
+def adder(n=1):
+    Ad = Cirquit(3*n + 1)
+    for i in range(n):
+        Ad.add_cirquit(carry().extend(3*i, "top")\
+                             .extend(3*(n-i-1), "bottom"))
+    Ad.add_controlled_gate(gates.Not, qubit_number=3*n-1, control_qubit=3*n-2)
+    for i in range(n):
+        Ad.add_cirquit(sum().extend(3*(n-i-1), "top")\
+                           .extend(3*i+1, "bottom"))
+    return Ad
