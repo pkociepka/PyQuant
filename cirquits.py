@@ -80,7 +80,7 @@ class Cirquit():
     def reversed(self):
         return Cirquit(size=self.size, steps=list(reversed(self.steps)))
 
-    def extend_to(self, n, location="bottom"):
+    def extend(self, n, location="bottom"):
         self.size += n
         if location == "bottom":
             for s in self.steps:
