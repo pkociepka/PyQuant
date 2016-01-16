@@ -39,6 +39,37 @@ class Cirquit():
 
         return self
 
+    def add_double_controlled_gate(self, gate, qubit_number=2, control_qubits=[0, 1]):
+        ret = []
+        # 1st control qubit
+        order = swap(list(range(self.size)), 0, control_qubits[0])
+        self.add_step([gates.Permutation(order)])
+        ret.append(gates.Permutation(order))
+        # 2nd control qubit
+        if control_qubits[1] == 0:
+            control_qubits[1] = control_qubits[0]
+        order = swap(list(range(self.size)), 1, control_qubits[1])
+        self.add_step([gates.Permutation(order)])
+        ret.append(gates.Permutation(order))
+
+        if qubit_number == 0:
+            qubit_number = control_qubits[0]
+        elif qubit_number == 1:
+            qubit_number = control_qubits[1]
+        if not qubit_number == 2:
+            order = swap(list(range(self.size)), 2, qubit_number)
+            self.add_step([gates.Permutation(order)])
+            ret.append(gates.Permutation(order))
+
+        step = [gates.double_controlled(gate)]
+        step.extend([gates.I] * (self.size - 3))
+        self.add_step(step)
+
+        for step in reversed(ret):
+            self.add_step([step])
+
+        return self
+
     def add_cirquit(self, cirquit):
         if not cirquit.size == self.size:
                 raise ValueError("Unproper cirquit size")
@@ -49,7 +80,7 @@ class Cirquit():
     def reversed(self):
         return Cirquit(size=self.size, steps=list(reversed(self.steps)))
 
-    def add_qubits(self, n, location="bottom"):
+    def extend_to(self, n, location="bottom"):
         self.size += n
         if location == "bottom":
             for s in self.steps:
