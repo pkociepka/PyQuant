@@ -105,7 +105,7 @@ Cirquit(2).extend(3) # this will make cirquit to operate on
                      # 5-qubits registers
 Cirquit(2).extend(1, "top") # you could add new qubits
                             # on the top (more significant bits)
-                            # or bottm (less significant)
+                            # or bottom (less significant)
 ```
 
 ##### Change qubits order in your register:
