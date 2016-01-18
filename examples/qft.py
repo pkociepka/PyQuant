@@ -11,3 +11,4 @@ def QFT(n):
         for j in range(2, n-i):
             cirq.add_controlled_gate(gates.R(j), qubit_number=i, control_qubit=i+j)
     cirq.add_step([gates.Permutation(list(reversed(range(n))))])
+    return cirq
