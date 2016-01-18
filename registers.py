@@ -1,4 +1,5 @@
 import random
+from math import sqrt
 
 from q_math import *
 from cirquits import *
@@ -17,6 +18,14 @@ class Register():
         if not len(values) == 2**self.size:
             raise ValueError("Wrong quantum register size")
         self.values = values[:]
+        return self.normalize()
+        # return self
+
+    def normalize(self):
+        s = sqrt(sum([abs(x)**2 for x in self.values]))
+        if not s == 1:
+            for i in range(len(self.values)):
+                self.values[i] = self.values[i]/s
         return self
 
     def fix_state(self, state):
