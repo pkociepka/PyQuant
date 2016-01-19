@@ -4,6 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from cirquits import *
 import gates
+from registers import *
 
 # half-adder
 # order of qubits in input register:
@@ -49,3 +50,25 @@ def adder(n=1):
         Ad.add_cirquit(sum().extend(3*(n-i-1), "top")\
                            .extend(3*i+1, "bottom"))
     return Ad
+
+def add(a, b, size):
+    # gets two registers of given size
+    # returns register of size (size+1) with (a+b) results
+    rev_order = list(reversed(range(size)))
+    big_rev_order = [size] + rev_order
+    c_a_b_order = []
+    for i in range(size):
+        c_a_b_order += [i+2*size, i, i+size]
+    c_a_indices = []
+    for i in range(size):
+        c_a_indices += [3*i, 3*i+1]
+
+    reg = a.shuffle(rev_order)
+    reg.extend(b.shuffle(rev_order))
+    reg.extend(Register(size))
+    reg.shuffle(c_a_b_order)
+    reg.extend(Register(1))
+    reg.apply_cirquit(adder(size))
+    reg.remove_qubits(c_a_indices)
+    reg.shuffle(big_rev_order)
+    return reg
