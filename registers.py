@@ -99,6 +99,11 @@ class Register():
         self.values = new_vals[:]
         return self
 
+    def remove_qubits(self, qubits):
+        for qubit in reversed(sorted(qubits)):
+            self.remove_qubit(qubit)
+        return self
+
     def print(self):
         print("\nProbabilities of states, %s-qubit register:" % self.size)
         for i in range(2**self.size):
