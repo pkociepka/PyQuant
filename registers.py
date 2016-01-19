@@ -86,6 +86,18 @@ class Register():
             self.values = kron([self.values, register.values])
         return self
 
+    def remove_qubit(self, qubit):
+        new_vals = []
+        for i in range(2**(self.size-1)):
+            state = format(i, '0%sb' % (self.size-1))
+            # states of the register with our qubit set to 0 and 1
+            state0 = int(state[:qubit] + "0" + state[qubit:], base=2)
+            state1 = int(state[:qubit] + "1" + state[qubit:], base=2)
+            new_vals.append(sqrt(abs(self.values[state0])**2 + abs(self.values[state1])**2))
+
+        self.size -= 1
+        self.values = new_vals[:]
+        return self
 
     def print(self):
         print("\nProbabilities of states, %s-qubit register:" % self.size)
