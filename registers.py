@@ -78,6 +78,15 @@ class Register():
             self.values = kron([self.values, extension])
         return self
 
+    def extend(self, register, location="bottom"):
+        self.size += register.size
+        if location == "top":
+            self.values = kron([register.values, self.values])
+        elif location == "bottom":
+            self.values = kron([self.values, register.values])
+        return self
+
+
     def print(self):
         print("\nProbabilities of states, %s-qubit register:" % self.size)
         for i in range(2**self.size):
